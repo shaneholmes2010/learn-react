@@ -11,6 +11,8 @@ export default function List() {
     initialArtists
   );
 
+  // Rewrote the delete handler to create a copy instead of perform a mutation.
+
   return (
     <>
       <h1>Inspiring sculptors:</h1>
@@ -19,7 +21,10 @@ export default function List() {
           <li key={artist.id}>
             {artist.name}{' '}
             <button onClick={() => {
-              artists.splice(artist.id, 1)
+              setArtists(
+                artists.filter(a => a.id !== artist.id)
+              )
+              //artists.splice(artist.id, 1)
             }}>
               Delete
             </button>

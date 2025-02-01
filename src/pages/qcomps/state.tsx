@@ -6,7 +6,9 @@ export default function Gallery() {
   const [showMore, setShowMore] = useState(false);
 
   function handleNextClick() {
-    setIndex((index + 1) % sculptureList.length);
+    // Bug where program crashed when user clicked next button on last sculpture
+    // Fixed by looping around to first sculpture using modulus
+    setIndex((index + 1) % sculptureList.length); 
   }
 
   function handleMoreClick() {

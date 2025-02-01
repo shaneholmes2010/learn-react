@@ -1,18 +1,23 @@
-export default function Form() {
-  let firstName = '';
-  let lastName = '';
 
-  function handleFirstNameChange(e: { target: { value: string; }; }) {
-    firstName = e.target.value;
+import { SetStateAction, useState } from 'react';
+
+export default function Form() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+
+  // Fixed the problem where typing wasn't updating anything
+  function handleFirstNameChange(e: { target: { value: SetStateAction<string>; }; }) {
+    setFirstName(e.target.value);
   }
 
-  function handleLastNameChange(e: { target: { value: string; }; }) {
-    lastName = e.target.value;
+  function handleLastNameChange(e: { target: { value: SetStateAction<string>; }; }) {
+    setLastName(e.target.value);
   }
 
   function handleReset() {
-    firstName = '';
-    lastName = '';
+    setFirstName('');
+    setLastName('');
   }
 
   return (

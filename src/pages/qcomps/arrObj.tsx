@@ -1,6 +1,14 @@
 import { useState } from 'react';
 import { ItemListProps } from '../../types/arrObj';
 
+// The problem is that the shallow copy is 
+// being updated when the original is updated.
+// This isn't ideal so what we'll do is create
+// a deep copy of the array. 
+
+
+// Fixed it so that it uses a deep copy of the array
+
 let nextId = 3;
 const initialList = [
   { id: 0, title: 'Big Bellies', seen: false },
@@ -8,29 +16,33 @@ const initialList = [
   { id: 2, title: 'Terracotta Army', seen: true },
 ];
 
+type ArtWorkListType = {
+  id: number;
+  title: string;
+  seen: boolean;
+};
+
+function toggleList(aList: ArtWorkListType[], artWorkId: number, nextSeen: boolean) {
+  return aList.map(e => {
+    if (e.id === artWorkId) {
+      return { ...e, seen: nextSeen };
+    } else {
+      return e;
+    }
+  });
+}
+
 export default function BucketList() {
   const [myList, setMyList] = useState(initialList);
-  const [yourList, setYourList] = useState(
-    initialList
-  );
+  const [yourList, setYourList] = useState(initialList);
 
   function handleToggleMyList(artworkId: number, nextSeen: boolean) {
-    const tmpList = myList.map(e => {
-        if (e.id === artworkId) {
-            e.seen = nextSeen
-        }
-        return e
-    });
+    const tmpList = toggleList(myList, artworkId, nextSeen);
     setMyList(tmpList);
   }
 
   function handleToggleYourList(artworkId: number, nextSeen: boolean) {
-    const tmpList = yourList.map(e => {
-        if (e.id === artworkId) {
-            e.seen = nextSeen
-        }
-        return e
-    });
+    const tmpList = toggleList(yourList, artworkId, nextSeen);
     setYourList(tmpList);
   }
 
